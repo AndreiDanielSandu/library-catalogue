@@ -1,5 +1,7 @@
 package creation;
 
+import creation.catalogues.LibraryCatalogue;
+
 public class BookSearchQueryBuilder {
 
     private String firstName  = null;
@@ -7,6 +9,7 @@ public class BookSearchQueryBuilder {
     private String title      = null;
     private Integer publishedAfter  = null;
     private Integer publishedBefore = null;
+    private LibraryCatalogue catalogue = null;
 
     public BookSearchQueryBuilder withFirstName(String firstName) {
         this.firstName = firstName;
@@ -33,7 +36,17 @@ public class BookSearchQueryBuilder {
         return this;
     }
 
-    public BookSearchQuery build() {
-        return new BookSearchQuery(firstName, lastName, title, publishedAfter, publishedBefore);
+    public BookSearchQueryBuilder withCatalogue(LibraryCatalogue catalogue) {
+        this.catalogue = catalogue; return this;
     }
+
+    public BookSearchQuery build() {
+        if (catalogue != null) {
+            return new BookSearchQuery(firstName, lastName, title,
+                    publishedAfter, publishedBefore, catalogue);
+        }
+        return new BookSearchQuery(firstName, lastName, title,
+                publishedAfter, publishedBefore);
+    }
+
 }
