@@ -4,16 +4,25 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import creation.catalogues.StubCatalogue;
+
+import org.junit.Before;
 import java.util.List;
 import org.junit.Test;
 
 public class BookSearchQueryTest {
+
+  private StubCatalogue stubCatalogue;
+  public void setUp() {
+    stubCatalogue = new StubCatalogue();
+  }
 
   @Test
   public void searchesForBooksInLibraryCatalogueByAuthorSurname() {
 
     List<Book> books = new BookSearchQueryBuilder()
             .withLastName("dickens")
+            .withCatalogue(stubCatalogue)
             .build()
             .execute();
 
@@ -26,6 +35,7 @@ public class BookSearchQueryTest {
 
     List<Book> books = new BookSearchQueryBuilder()
             .withFirstName("Jane")
+            .withCatalogue(stubCatalogue)
             .build()
             .execute();
 
@@ -38,6 +48,7 @@ public class BookSearchQueryTest {
 
     List<Book> books = new BookSearchQueryBuilder()
             .withTitle("Two Cities")
+            .withCatalogue(stubCatalogue)
             .build()
             .execute();
 
@@ -50,6 +61,7 @@ public class BookSearchQueryTest {
 
     List<Book> books = new BookSearchQueryBuilder()
             .publishedBefore(1700)
+            .withCatalogue(stubCatalogue)
             .build()
             .execute();
 
@@ -62,6 +74,7 @@ public class BookSearchQueryTest {
 
     List<Book> books = new BookSearchQueryBuilder()
             .publishedAfter(1950)
+            .withCatalogue(stubCatalogue)
             .build()
             .execute();
 
@@ -74,6 +87,7 @@ public class BookSearchQueryTest {
 
     List<Book> books = new BookSearchQueryBuilder()
             .withLastName("dickens")
+            .withCatalogue(stubCatalogue)
             .publishedBefore(1840)
             .build()
             .execute();
